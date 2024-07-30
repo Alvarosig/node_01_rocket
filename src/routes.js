@@ -1,18 +1,22 @@
 import { randomUUID } from 'node:crypto'
+import { Database } from './database.js'
+
+const database= new Database()
 
 export const routes = [
   {
     method: 'GET',
     path: '/task',
-    handler: (req, res, tasks) => {
-      console.log(tasks)
-      return res.writeHead(200).end('Hello World')
+    handler: (req, res) => {
+      const tasks = database.select('tasks')
+
+      return res.end(JSON.stringify(tasks))
     }
   },
   {
     method: 'POST',
     path: '/task',
-    handler: (req, res, tasks) => {
+    handler: (req, res) => {
       const { title, description } = req.body
       
       const task = {
@@ -24,7 +28,7 @@ export const routes = [
         updated_at: null
       }
 
-      tasks.push(task)
+      database.insert('tasks', task)
 
       return res.writeHead(201).end('Task created')
     }
