@@ -20,8 +20,7 @@ export const routes = [
     handler: (req, res) => {
       const { title, description } = req.body
 
-      // Check Validation
-      if(!title.trim() || !description.trim()) {
+      if(!title?.trim() || !description?.trim()) {
         return res.writeHead(400).end("Title and description are required")
       }
 
@@ -52,7 +51,7 @@ export const routes = [
         return res.writeHead(400).end("Task ID not found")
       }
       
-      if(!title.trim() || !description.trim()) {
+      if(!title?.trim() || !description?.trim()) {
         return res.writeHead(400).end("Title and description are required")
       }
 
